@@ -1,8 +1,12 @@
 package com.comics.lezhin.toon.poc.common.config
 
-import org.springframework.boot.context.properties.ConfigurationProperties
+import com.comics.lezhin.toon.poc.common.token.JwtProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@ConfigurationProperties("comics.lezhin.toon.poc")
-class PropertiesConfiguration
+class PropertiesConfiguration {
+    @Configuration
+    @EnableConfigurationProperties(JwtProperties::class)
+    class JwtPropertiesConfiguration
+}
