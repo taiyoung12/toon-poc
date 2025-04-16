@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.common
+package com.comics.lezhin.toon.poc.common.code
 
 interface Code {
     fun getCode(): String

@@ -1,6 +1,6 @@
-package com.comics.lezhin.toon.poc.exception
+package com.comics.lezhin.toon.poc.common.exception
 
-import com.comics.lezhin.toon.poc.common.Code
+import com.comics.lezhin.toon.poc.common.code.Code
 
 open class BaseException(
     val code: Code,

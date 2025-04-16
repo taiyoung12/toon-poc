@@ -1,6 +1,6 @@
-package com.comics.lezhin.toon.poc.exception
+package com.comics.lezhin.toon.poc.common.exception
 
-import com.comics.lezhin.toon.poc.common.CommonCode
+import com.comics.lezhin.toon.poc.common.code.CommonCode
 
 class ValidationException(
     val errors: Map<String, String>,

@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.common
+package com.comics.lezhin.toon.poc.common.code
 
 import org.springframework.http.HttpStatus
 

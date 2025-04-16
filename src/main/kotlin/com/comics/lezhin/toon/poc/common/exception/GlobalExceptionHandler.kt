@@ -1,7 +1,7 @@
-package com.comics.lezhin.toon.poc.exception
+package com.comics.lezhin.toon.poc.common.exception
 
-import com.comics.lezhin.toon.poc.common.CommonCode
-import com.comics.lezhin.toon.poc.response.Response
+import com.comics.lezhin.toon.poc.common.code.CommonCode
+import com.comics.lezhin.toon.poc.common.response.Response
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

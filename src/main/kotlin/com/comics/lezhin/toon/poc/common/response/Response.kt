@@ -1,7 +1,7 @@
-package com.comics.lezhin.toon.poc.response
+package com.comics.lezhin.toon.poc.common.response
 
-import com.comics.lezhin.toon.poc.common.Code
-import com.comics.lezhin.toon.poc.common.CommonCode
+import com.comics.lezhin.toon.poc.common.code.Code
+import com.comics.lezhin.toon.poc.common.code.CommonCode
 
 data class Response<T>(
     val code: String,
