@@ -1,2 +1,6 @@
 api:
   prefix: /api/v1
+
+jwt:
+  secretKey: "lezhin-super-secret-key-lezhin-super-secret-key"
+  accessTokenExpiration: 600000 # 60 * 10 * 1000 = 10minutes
