@@ -12,13 +12,13 @@ import org.hibernate.annotations.SQLRestriction
 @SQLRestriction("deleted_at IS NULL")
 class UserEntity(
     name: String,
-    isAdult: Boolean,
+    age: Int,
 ) : EditableBaseEntity() {
     @Column(nullable = false)
     var name: String = name
         protected set
 
-    @Column(name = "is_adult", nullable = false)
-    var isAdult: Boolean = isAdult
+    @Column(name = "age", nullable = false)
+    var age: Int = age
         protected set
 }
