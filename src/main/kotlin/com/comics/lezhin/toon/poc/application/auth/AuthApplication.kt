@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.application
+package com.comics.lezhin.toon.poc.application.auth
 
 import com.comics.lezhin.toon.poc.app.annotation.ApplicationLayer
 import com.comics.lezhin.toon.poc.app.exception.BaseException

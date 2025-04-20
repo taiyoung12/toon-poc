@@ -1,7 +1,7 @@
 package com.comics.lezhin.toon.poc.controller.auth
 
 import com.comics.lezhin.toon.poc.app.response.Response
-import com.comics.lezhin.toon.poc.application.AuthApplication
+import com.comics.lezhin.toon.poc.application.auth.AuthApplication
 import com.comics.lezhin.toon.poc.common.code.AuthCode
 import com.comics.lezhin.toon.poc.controller.request.SigninRequest
 import com.comics.lezhin.toon.poc.controller.response.SigninResponse
