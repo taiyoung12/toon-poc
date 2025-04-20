@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.service
+package com.comics.lezhin.toon.poc.service.auth
 
 import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.common.code.AuthCode

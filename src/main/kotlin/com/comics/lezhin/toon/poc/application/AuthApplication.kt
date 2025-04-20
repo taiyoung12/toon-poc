@@ -5,7 +5,7 @@ import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.app.token.JwtGenerator
 import com.comics.lezhin.toon.poc.common.code.AuthCode
 import com.comics.lezhin.toon.poc.common.utils.PasswordMatcher
-import com.comics.lezhin.toon.poc.service.UserReader
+import com.comics.lezhin.toon.poc.service.auth.UserReader
 
 @ApplicationLayer
 class AuthApplication(

@@ -4,6 +4,7 @@ import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.common.code.AuthCode
 import com.comics.lezhin.toon.poc.entity.UserEntity
 import com.comics.lezhin.toon.poc.repository.UserRepository
+import com.comics.lezhin.toon.poc.service.auth.UserReader
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
