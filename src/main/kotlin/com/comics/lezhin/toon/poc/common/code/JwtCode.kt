@@ -8,6 +8,7 @@ enum class JwtCode(
     private val httpStatus: HttpStatus,
 ) : Code {
     FAIL_EXTRACT_SUBJECT("US401", "토큰에서 사용자 정보를 추출할 수 없습니다.", HttpStatus.UNAUTHORIZED),
+    BLANK_TOKEN("US001", "토큰이 비어 있습니다", HttpStatus.UNAUTHORIZED),
     ;
 
     override fun getCode(): String = code

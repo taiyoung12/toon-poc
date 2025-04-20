@@ -2,7 +2,6 @@ package com.comics.lezhin.toon.poc.app.config
 import com.comics.lezhin.toon.poc.app.annotation.UserId
 import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.common.code.JwtCode
-import jakarta.servlet.http.HttpServletRequest
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -26,11 +25,14 @@ class UserIdArgumentResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?,
     ): Any {
-        val request = webRequest.getNativeRequest(HttpServletRequest::class.java)
-        val userId =
-            request?.getAttribute(USER_ID)
-                ?: throw BaseException(JwtCode.FAIL_EXTRACT_SUBJECT)
+        val userIdAttribute =
+            webRequest.getAttribute(USER_ID, NativeWebRequest.SCOPE_REQUEST)
+                ?: throw BaseException(JwtCode.BLANK_TOKEN)
 
-        return (userId as String).toLong()
+        val userId =
+            userIdAttribute.toString().toLongOrNull()
+                ?: throw BaseException(JwtCode.BLANK_TOKEN)
+
+        return userId
     }
 }
