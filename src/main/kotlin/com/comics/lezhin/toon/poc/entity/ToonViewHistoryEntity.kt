@@ -11,7 +11,7 @@ class ToonViewHistoryEntity(
     userId: Long,
     toonId: Long,
     viewedAt: LocalDateTime,
-) : BaseEntity() {
+) : EditableBaseEntity() {
     @Column(name = "user_id", nullable = false)
     var userId: Long = userId
         protected set

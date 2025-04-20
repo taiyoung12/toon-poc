@@ -18,7 +18,7 @@ abstract class EditableBaseEntity : BaseEntity() {
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMP")
     private var deletedAt: LocalDateTime? = null
 
-    protected fun delete(deletedAt: LocalDateTime) {
+    fun delete(deletedAt: LocalDateTime) {
         this.deletedAt = deletedAt
     }
 }
