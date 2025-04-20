@@ -8,6 +8,7 @@ enum class CoinCode(
     private val httpStatus: HttpStatus,
 ) : Code {
     NO_CHARGE_HISTORY("CN404", "충전 이력이 없습니다.", HttpStatus.NOT_FOUND),
+    INSUFFICIENT_BALANCE("CN400", "잔액이 부족합니다.", HttpStatus.BAD_REQUEST),
     ;
 
     override fun getCode(): String = code
