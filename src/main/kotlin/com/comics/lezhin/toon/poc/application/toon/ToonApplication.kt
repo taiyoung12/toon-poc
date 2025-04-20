@@ -13,7 +13,10 @@ import com.comics.lezhin.toon.poc.service.toon.ToonPricePolicyReader
 import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseSaver
 import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonReader
+import com.comics.lezhin.toon.poc.service.toon.ToonUpdater
+import com.comics.lezhin.toon.poc.service.toon.ToonViewHistoryReader
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @ApplicationLayer
 class ToonApplication(
@@ -25,6 +28,8 @@ class ToonApplication(
     private val toonPurchaseSaver: ToonPurchaseSaver,
     private val toonPurchaseUpdater: ToonPurchaseUpdater,
     private val userReader: UserReader,
+    private val toonViewHistoryReader: ToonViewHistoryReader,
+    private val toonUpdater: ToonUpdater,
 ) {
     @Transactional
     fun purchase(
@@ -36,7 +41,7 @@ class ToonApplication(
         toonEntity.filter(userEntity = userEntity)
 
         val toonPricePolicyEntity = toonPricePolicyReader.findToonPricePolicyBy(toonId = toonId)
-        val deductBalance = caculateBalance(toonPricePolicyEntity, toonEntity)
+        val deductBalance = calculateBalance(toonPricePolicyEntity, toonEntity)
         val sourceType = determineSourceType(toonPricePolicyEntity)
 
         val userCoinEntity =
@@ -48,6 +53,21 @@ class ToonApplication(
             )
 
         return userCoinEntity.balance
+    }
+
+    @Transactional
+    fun deleteToonAllInfo(
+        deletedAt: LocalDateTime,
+        toonId: Long,
+    ) {
+        val toonEntity = toonReader.getToonBy(id = toonId)
+        val toonViewHistoryEntityList = toonViewHistoryReader.findToonViewHistoryListBy(id = toonId)
+
+        toonUpdater.deleteAll(
+            deletedAt = deletedAt,
+            toonEntity = toonEntity,
+            toonViewHistoryEntityList = toonViewHistoryEntityList,
+        )
     }
 
     fun executePurchaseTransaction(
@@ -83,7 +103,7 @@ class ToonApplication(
         return sourceType
     }
 
-    private fun caculateBalance(
+    private fun calculateBalance(
         toonPricePolicyEntity: ToonPricePolicyEntity?,
         toonEntity: ToonEntity,
     ): Int {

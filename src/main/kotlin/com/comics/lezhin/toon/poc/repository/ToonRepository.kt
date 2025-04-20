@@ -5,4 +5,6 @@ import org.springframework.data.repository.Repository
 
 interface ToonRepository : Repository<ToonEntity, Long> {
     fun findById(id: Long): ToonEntity?
+
+    fun findAll(): List<ToonEntity>
 }

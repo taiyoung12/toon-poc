@@ -11,11 +11,13 @@ import com.comics.lezhin.toon.poc.controller.response.PurchaseToonResponse
 import com.comics.lezhin.toon.poc.controller.response.ReadToonPurchaseResponse
 import com.comics.lezhin.toon.poc.controller.response.ReadToonRankResponse
 import com.comics.lezhin.toon.poc.controller.response.ReadToonViewHistoryResponse
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/v1/toon")
@@ -55,5 +57,17 @@ class ToonController(
     ): Response<ReadToonPurchaseResponse> {
         val response = toonPurchaseApplication.readTop10()
         return Response.success(ToonCode.SUCCESS_READ_PURCHASE_TOON, response)
+    }
+
+    @DeleteMapping("/{toonId}")
+    fun deleteToonAllInfo(
+        @PathVariable("toonId") toonId: Long,
+    ): Response<Void?> {
+        val deletedAt = LocalDateTime.now()
+        toonApplication.deleteToonAllInfo(
+            deletedAt = deletedAt,
+            toonId = toonId,
+        )
+        return Response.success(ToonCode.SUCCESS_DELETE_TOON_INFO)
     }
 }

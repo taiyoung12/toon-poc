@@ -12,6 +12,7 @@ enum class ToonCode(
     TOON_PURCHASE_SUCCESS("TP200", "웹툰 구매에 성공하였습니다.", HttpStatus.OK),
     SUCCESS_READ_POPULAR_TOON("TR200", "인기 작품 조회에 성공하였습니다.", HttpStatus.OK),
     SUCCESS_READ_PURCHASE_TOON("TPR200", "인기 구매 작품 조회에 성공하였습니다.", HttpStatus.OK),
+    SUCCESS_DELETE_TOON_INFO("TND200", "작품 삭제에 성공하였습니다.", HttpStatus.OK),
     ;
 
     override fun getCode(): String = code

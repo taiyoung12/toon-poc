@@ -7,6 +7,7 @@ import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.toonEntit
 import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.toonId
 import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.toonPrice
 import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.toonPricePolicyEntity
+import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.toonViewHistoryEntityList
 import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.userCoinEntity
 import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.userEntity
 import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.userId
@@ -21,6 +22,8 @@ import com.comics.lezhin.toon.poc.service.toon.ToonPricePolicyReader
 import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseSaver
 import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonReader
+import com.comics.lezhin.toon.poc.service.toon.ToonUpdater
+import com.comics.lezhin.toon.poc.service.toon.ToonViewHistoryReader
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,6 +34,7 @@ import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
+import java.time.LocalDateTime
 
 @ExtendWith(MockitoExtension::class)
 class ToonApplicationTest {
@@ -56,6 +60,12 @@ class ToonApplicationTest {
     private lateinit var toonPurchaseUpdater: ToonPurchaseUpdater
 
     @Mock
+    private lateinit var toonViewHistoryReader: ToonViewHistoryReader
+
+    @Mock
+    private lateinit var toonUpdater: ToonUpdater
+
+    @Mock
     private lateinit var userReader: UserReader
 
     private lateinit var sut: ToonApplication
@@ -72,6 +82,8 @@ class ToonApplicationTest {
                 toonPurchaseSaver = toonPurchaseSaver,
                 toonPurchaseUpdater = toonPurchaseUpdater,
                 userReader = userReader,
+                toonUpdater = toonUpdater,
+                toonViewHistoryReader = toonViewHistoryReader,
             )
     }
 
@@ -155,5 +167,21 @@ class ToonApplicationTest {
         assertEquals(ToonCode.FILTER_MINOR, exception.code)
         verify(toonPricePolicyReader, never()).findToonPricePolicyBy(anyLong())
         verify(userCoinReader, never()).getUserCoinBy(anyLong())
+    }
+
+    @Test
+    fun `웹툰과 관련된 모든 정보를 삭제할 수 있다`() {
+        val toonViewHistoryList = toonViewHistoryEntityList
+        val deletedAt = LocalDateTime.now()
+
+        `when`(toonReader.getToonBy(toonId)).thenReturn(toonEntity)
+        `when`(toonViewHistoryReader.findToonViewHistoryListBy(toonId)).thenReturn(toonViewHistoryList)
+        doNothing().`when`(toonUpdater).deleteAll(deletedAt, toonEntity, toonViewHistoryList)
+
+        sut.deleteToonAllInfo(deletedAt, toonId)
+
+        verify(toonReader, times(1)).getToonBy(toonId)
+        verify(toonViewHistoryReader, times(1)).findToonViewHistoryListBy(toonId)
+        verify(toonUpdater, times(1)).deleteAll(deletedAt, toonEntity, toonViewHistoryList)
     }
 }
