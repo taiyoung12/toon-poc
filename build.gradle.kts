@@ -4,6 +4,7 @@ plugins {
     kotlin("plugin.jpa") version "1.9.25"
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
 
 group = "com.comics.lezhin"
@@ -18,6 +19,8 @@ java {
 repositories {
     mavenCentral()
 }
+
+val snippetsDir by extra { file("build/generated-snippets") }
 
 allOpen {
     annotation("jakarta.persistence.Entity")
@@ -49,6 +52,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -58,6 +62,30 @@ kotlin {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+tasks {
+    test {
+        outputs.dir(snippetsDir)
+        useJUnitPlatform()
+    }
+
+    asciidoctor {
+        dependsOn(test)
+
+        doFirst {
+            delete(file("src/main/resources/static/docs"))
+        }
+
+        inputs.dir(snippetsDir)
+
+        doLast {
+            copy {
+                from("build/docs/asciidoc")
+                into("src/main/resources/static/docs")
+            }
+        }
+    }
+
+    build {
+        dependsOn(asciidoctor)
+    }
 }
