@@ -16,6 +16,11 @@ data class Response<T>(
                 data,
             )
 
+        fun <T> success(
+            code: Code,
+            data: T,
+        ): Response<T> = Response(code.getCode(), code.getMessage(), data)
+
         fun success(responseCode: Code): Response<Void?> = Response(responseCode.getCode(), responseCode.getMessage(), null)
 
         fun <T> error(
