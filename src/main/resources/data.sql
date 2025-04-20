@@ -1,12 +1,12 @@
-insert into users (email, name, password, age)
-values
-    ('lezhin1@test.com',  '레진1', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 25),
-    ('lezhin2@test.com',  '레진2', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 26),
-    ('lezhin3@test.com',  '레진3', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 27),
-    ('lezhin4@test.com',  '레진4', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 28),
-    ('lezhin5@test.com',  '레진5', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 29),
-    ('lezhin6@test.com',  '레진6', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 30),
-    ('lezhin7@test.com',  '레진7', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 31),
-    ('lezhin8@test.com',  '레진8', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 32),
-    ('lezhin9@test.com',  '레진9', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 33),
-    ('lezhin10@test.com', '레진10', '$2a$10$zZ7eY08zBqMY5MxL.2U.4O7FExHFUvAw4lLt74m4cooxTSIISbSGq', 34);
+INSERT INTO users (email, name, password, age)
+VALUES
+    ('lezhin1@test.com',  '한우진', 'lezhin123!', 18),
+    ('lezhin2@test.com',  '한우짱', 'lezhin123!', 20),
+    ('lezhin3@test.com',  '도가영', 'lezhin123!', 18),
+    ('lezhin4@test.com',  '도나영', 'lezhin123!', 19),
+    ('lezhin5@test.com',  '도다영', 'lezhin123!', 20),
+    ('lezhin6@test.com',  '도라영', 'lezhin123!', 21),
+    ('lezhin7@test.com',  '도마영', 'lezhin123!', 22),
+    ('lezhin8@test.com',  '도바영', 'lezhin123!', 23),
+    ('lezhin9@test.com',  '도사영', 'lezhin123!', 33),
+    ('lezhin10@test.com', '도차영', 'lezhin123!', 30);
