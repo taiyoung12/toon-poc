@@ -64,4 +64,34 @@ class UserReaderTest {
 
         assertEquals(AuthCode.NOT_FOUND_USER_BY_EMAIL, exception.code)
     }
+
+    @Test
+    fun `ID 목록으로 유저들을 조회할 수 있다`() {
+        val idList = listOf(1L, 2L)
+        val userEntityList =
+            listOf(
+                UserEntity(name = "한우진", email = "lezhin1@test.com", password = "encoded", age = 30),
+                UserEntity(name = "도가영", email = "lezhin2@test.com", password = "encoded", age = 28),
+            )
+
+        `when`(userRepository.findAllByIdIn(idList = idList)).thenReturn(userEntityList)
+
+        val actual = sut.findAllUserBy(idList = idList)
+
+        assertEquals(actual?.size, 2)
+        verify(userRepository, times(1)).findAllByIdIn(idList = idList)
+    }
+
+    @Test
+    fun `ID목록에 해당하는 유저가 없다면 빈 List를 반환할 수 있다`() {
+        val idList = listOf(998L, 999L)
+        val emptyList = emptyList<UserEntity>()
+
+        `when`(userRepository.findAllByIdIn(idList = idList)).thenReturn(emptyList)
+
+        val actual = sut.findAllUserBy(idList = idList)
+
+        assertEquals(actual?.size, 0)
+        verify(userRepository, times(1)).findAllByIdIn(idList = idList)
+    }
 }

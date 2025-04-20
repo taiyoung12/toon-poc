@@ -19,4 +19,10 @@ class UserReader(
 
         return userEntity
     }
+
+    @Transactional(readOnly = true)
+    fun findAllUserBy(idList: List<Long>): List<UserEntity>? {
+        val userEntityList = userRepository.findAllByIdIn(idList = idList)
+        return userEntityList
+    }
 }
