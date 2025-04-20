@@ -1,5 +1,7 @@
 package com.comics.lezhin.toon.poc.entity
 
+import com.comics.lezhin.toon.poc.app.exception.BaseException
+import com.comics.lezhin.toon.poc.common.code.ToonCode
 import com.comics.lezhin.toon.poc.common.enums.toon.Genre
 import com.comics.lezhin.toon.poc.common.enums.toon.PriceType
 import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
@@ -56,4 +58,10 @@ class ToonEntity(
     @Column(name = "schedule_day", nullable = false)
     var scheduleDay: ScheduleDay = scheduleDay
         protected set
+
+    fun filter(userEntity: UserEntity) {
+        if (this.isAdultOnly && userEntity.age < 20) {
+            throw BaseException(ToonCode.FILTER_MINOR)
+        }
+    }
 }

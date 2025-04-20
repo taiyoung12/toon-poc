@@ -7,7 +7,8 @@ enum class ToonCode(
     private val message: String,
     private val httpStatus: HttpStatus,
 ) : Code {
-    NOT_FOUND_TOON_BY_ID("TN404", "toonId에 해당하는 toon이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+    NOT_FOUND_TOON_BY_ID("TN001", "toonId에 해당하는 toon이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+    FILTER_MINOR("TN002", "미성년자는 성인 컨텐츠에 접근할 수 없습니다.", HttpStatus.UNAUTHORIZED),
     ;
 
     override fun getCode(): String = code
