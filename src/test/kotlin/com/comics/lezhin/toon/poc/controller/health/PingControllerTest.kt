@@ -1,6 +1,6 @@
-package com.comics.lezhin.toon.poc.controller
+package com.comics.lezhin.toon.poc.controller.health
 
-import com.comics.lezhin.toon.poc.controller.health.PingController
+import com.comics.lezhin.toon.poc.controller.BaseApiTest
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType

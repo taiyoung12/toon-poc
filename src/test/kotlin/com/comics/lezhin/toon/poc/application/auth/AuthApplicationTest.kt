@@ -1,11 +1,11 @@
-package com.comics.lezhin.toon.poc.application
+package com.comics.lezhin.toon.poc.application.auth
 
 import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.app.token.JwtGenerator
 import com.comics.lezhin.toon.poc.common.code.AuthCode
 import com.comics.lezhin.toon.poc.common.utils.PasswordMatcher
 import com.comics.lezhin.toon.poc.entity.UserEntity
-import com.comics.lezhin.toon.poc.service.UserReader
+import com.comics.lezhin.toon.poc.service.auth.UserReader
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

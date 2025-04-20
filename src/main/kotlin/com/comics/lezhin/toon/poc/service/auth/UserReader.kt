@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.service
+package com.comics.lezhin.toon.poc.service.auth
 
 import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.common.code.AuthCode
@@ -18,5 +18,11 @@ class UserReader(
                 ?: throw BaseException(AuthCode.NOT_FOUND_USER_BY_EMAIL)
 
         return userEntity
+    }
+
+    @Transactional(readOnly = true)
+    fun findAllUserBy(idList: List<Long>): List<UserEntity>? {
+        val userEntityList = userRepository.findAllByIdIn(idList = idList)
+        return userEntityList
     }
 }
