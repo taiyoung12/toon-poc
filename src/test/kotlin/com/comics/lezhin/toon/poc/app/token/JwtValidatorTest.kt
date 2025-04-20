@@ -1,7 +1,7 @@
-package com.comics.lezhin.toon.poc.common.token
+package com.comics.lezhin.toon.poc.app.token
 
+import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.common.code.JwtCode
-import com.comics.lezhin.toon.poc.common.exception.BaseException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
