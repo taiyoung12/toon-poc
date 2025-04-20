@@ -3,21 +3,17 @@ package com.comics.lezhin.toon.poc.inmemory
 import com.comics.lezhin.toon.poc.inmemory.RedisKeys.PURCHASE_RANK_KEY
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonPurchaseDto
 import com.comics.lezhin.toon.poc.inmemory.dto.toPurchaseDto
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
 class PurchaseRepository(
     private val redisTemplate: RedisTemplate<String, Any>,
+    @Qualifier("redisObjectMapper")
+    private val objectMapper: ObjectMapper,
 ) {
-    private val objectMapper =
-        ObjectMapper()
-            .registerKotlinModule()
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-
     fun incrementPurchase(toonId: Long) {
         redisTemplate.opsForZSet().incrementScore(PURCHASE_RANK_KEY, toonId.toString(), 1.0)
     }
