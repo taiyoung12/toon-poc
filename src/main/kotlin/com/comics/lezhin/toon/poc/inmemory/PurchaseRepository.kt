@@ -1,6 +1,7 @@
 package com.comics.lezhin.toon.poc.inmemory
 
 import com.comics.lezhin.toon.poc.inmemory.RedisKeys.PURCHASE_RANK_KEY
+import com.comics.lezhin.toon.poc.inmemory.dto.ToonDto
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonPurchaseDto
 import com.comics.lezhin.toon.poc.inmemory.dto.toPurchaseDto
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -15,7 +16,20 @@ class PurchaseRepository(
     private val objectMapper: ObjectMapper,
 ) {
     fun incrementPurchase(toonId: Long) {
-        redisTemplate.opsForZSet().incrementScore(PURCHASE_RANK_KEY, toonId.toString(), 1.0)
+        val zSetOps = redisTemplate.opsForZSet()
+        val all = zSetOps.range(PURCHASE_RANK_KEY, 0, -1) ?: return
+
+        val targetJson =
+            all.firstOrNull {
+                try {
+                    val dto = objectMapper.readValue(it.toString(), ToonDto::class.java)
+                    dto.id == toonId
+                } catch (e: Exception) {
+                    false
+                }
+            } ?: return
+
+        zSetOps.incrementScore(PURCHASE_RANK_KEY, targetJson, 1.0)
     }
 
     fun getPurchaseTop10(): List<ToonPurchaseDto> {

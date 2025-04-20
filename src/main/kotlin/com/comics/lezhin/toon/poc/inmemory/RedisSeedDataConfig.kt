@@ -17,6 +17,7 @@ class RedisSeedDataConfig(
     private val redisTemplate: RedisTemplate<String, Any>,
 ) {
     private val mapper = ObjectMapper()
+    private var idCounter = 1L
 
     @PostConstruct
     fun init() {
@@ -87,6 +88,7 @@ class RedisSeedDataConfig(
     ): ToonDto {
         val toon =
             ToonDto(
+                id = idCounter++,
                 title = title,
                 adultOnly = isAdultOnly,
                 price = price,
