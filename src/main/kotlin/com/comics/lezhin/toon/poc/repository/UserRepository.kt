@@ -7,4 +7,6 @@ interface UserRepository : Repository<UserEntity, Long> {
     fun findByEmail(email: String): UserEntity?
 
     fun findAllByIdIn(idList: List<Long>): List<UserEntity>
+
+    fun findById(id: Long): UserEntity?
 }

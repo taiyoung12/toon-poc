@@ -94,4 +94,40 @@ class UserReaderTest {
         assertEquals(actual?.size, 0)
         verify(userRepository, times(1)).findAllByIdIn(idList = idList)
     }
+
+    @Test
+    fun `id에  맞는 유저가 있다면 조회할 수 있다`() {
+        val id = 1L
+        val email = "woojin@lezhin.com"
+        val password = "password"
+        val name = "한우진"
+        val age = 19
+
+        val user =
+            UserEntity(
+                email = email,
+                password = password,
+                name = name,
+                age = age,
+            )
+
+        `when`(userRepository.findById(id = id)).thenReturn(user)
+
+        sut.getBy(id = id)
+
+        verify(userRepository, times(1)).findById(id = id)
+    }
+
+    @Test
+    fun `id로 유저 조회 실패시 예외가 발생할 수 있다`() {
+        val id = 999L
+        `when`(userRepository.findById(id)).thenReturn(null)
+
+        val exception =
+            assertThrows<BaseException> {
+                sut.getBy(id)
+            }
+
+        assertEquals(AuthCode.NOT_FOUND_USER_BY_ID, exception.code)
+    }
 }

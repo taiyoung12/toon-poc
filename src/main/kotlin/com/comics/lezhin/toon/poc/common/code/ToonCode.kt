@@ -2,13 +2,14 @@ package com.comics.lezhin.toon.poc.common.code
 
 import org.springframework.http.HttpStatus
 
-enum class JwtCode(
+enum class ToonCode(
     private val code: String,
     private val message: String,
     private val httpStatus: HttpStatus,
 ) : Code {
-    FAIL_EXTRACT_SUBJECT("US401", "토큰에서 사용자 정보를 추출할 수 없습니다.", HttpStatus.UNAUTHORIZED),
-    BLANK_TOKEN("US001", "토큰이 비어 있습니다", HttpStatus.UNAUTHORIZED),
+    NOT_FOUND_TOON_BY_ID("TN001", "toonId에 해당하는 toon이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+    FILTER_MINOR("TN002", "미성년자는 성인 컨텐츠에 접근할 수 없습니다.", HttpStatus.UNAUTHORIZED),
+    TOON_PURCHASE_SUCCESS("TP200", "웹툰 구매에 성공하였습니다.", HttpStatus.OK),
     ;
 
     override fun getCode(): String = code

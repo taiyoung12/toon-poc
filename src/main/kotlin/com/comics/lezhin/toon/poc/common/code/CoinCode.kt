@@ -2,13 +2,13 @@ package com.comics.lezhin.toon.poc.common.code
 
 import org.springframework.http.HttpStatus
 
-enum class JwtCode(
+enum class CoinCode(
     private val code: String,
     private val message: String,
     private val httpStatus: HttpStatus,
 ) : Code {
-    FAIL_EXTRACT_SUBJECT("US401", "토큰에서 사용자 정보를 추출할 수 없습니다.", HttpStatus.UNAUTHORIZED),
-    BLANK_TOKEN("US001", "토큰이 비어 있습니다", HttpStatus.UNAUTHORIZED),
+    NO_CHARGE_HISTORY("CN404", "충전 이력이 없습니다.", HttpStatus.NOT_FOUND),
+    INSUFFICIENT_BALANCE("CN400", "잔액이 부족합니다.", HttpStatus.BAD_REQUEST),
     ;
 
     override fun getCode(): String = code
