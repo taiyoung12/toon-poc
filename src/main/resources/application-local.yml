@@ -5,6 +5,12 @@ spring:
     username: lezhin
     password: password
 
+  data:
+    redis:
+      host: localhost
+      port: 6389
+      password: lezhin123
+
   sql:
     init:
       mode: always
@@ -19,9 +25,6 @@ spring:
         format_sql: true
         show_sql: true
     open-in-view: false
-
-api:
-  prefix: /api/v1
 
 jwt:
   secretKey: "lezhin-super-secret-key-lezhin-super-secret-key"
