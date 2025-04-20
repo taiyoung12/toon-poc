@@ -9,6 +9,7 @@ enum class ToonCode(
 ) : Code {
     NOT_FOUND_TOON_BY_ID("TN001", "toonId에 해당하는 toon이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
     FILTER_MINOR("TN002", "미성년자는 성인 컨텐츠에 접근할 수 없습니다.", HttpStatus.UNAUTHORIZED),
+    TOON_PURCHASE_SUCCESS("TP200", "웹툰 구매에 성공하였습니다.", HttpStatus.OK),
     ;
 
     override fun getCode(): String = code
