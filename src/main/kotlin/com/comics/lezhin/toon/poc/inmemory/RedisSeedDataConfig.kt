@@ -4,7 +4,8 @@ import com.comics.lezhin.toon.poc.common.enums.toon.Genre
 import com.comics.lezhin.toon.poc.common.enums.toon.PriceType
 import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
 import com.comics.lezhin.toon.poc.common.enums.toon.ToonState
-import com.comics.lezhin.toon.poc.entity.ToonEntity
+import com.comics.lezhin.toon.poc.inmemory.dto.ToonDto
+import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.annotation.PostConstruct
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -15,6 +16,8 @@ import org.springframework.data.redis.core.RedisTemplate
 class RedisSeedDataConfig(
     private val redisTemplate: RedisTemplate<String, Any>,
 ) {
+    private val mapper = ObjectMapper()
+
     @PostConstruct
     fun init() {
         if (redisTemplate.hasKey(RedisKeys.VIEWED_TOP_GENERAL) ||
@@ -53,12 +56,14 @@ class RedisSeedDataConfig(
 
         val generalZSet = redisTemplate.opsForZSet()
         generalToons.forEach { toon ->
-            generalZSet.add(RedisKeys.VIEWED_TOP_GENERAL, toon, getViewCount(toon))
+            val toonDto = mapper.writeValueAsString(toon)
+            generalZSet.add(RedisKeys.VIEWED_TOP_GENERAL, toonDto, getViewCount(toon))
         }
 
         val adultZSet = redisTemplate.opsForZSet()
         adultToons.forEach { toon ->
-            adultZSet.add(RedisKeys.VIEWED_TOP_ADULT, toon, getViewCount(toon))
+            val toonDto = mapper.writeValueAsString(toon)
+            adultZSet.add(RedisKeys.VIEWED_TOP_ADULT, toonDto, getViewCount(toon))
         }
 
         println("Redis 시드 데이터 초기화 완료")
@@ -72,11 +77,11 @@ class RedisSeedDataConfig(
         genre: Genre,
         scheduleDay: ScheduleDay,
         viewCount: Double,
-    ): ToonEntity {
+    ): ToonDto {
         val toon =
-            ToonEntity(
+            ToonDto(
                 title = title,
-                isAdultOnly = isAdultOnly,
+                adultOnly = isAdultOnly,
                 price = price,
                 priceType = priceType,
                 toonState = ToonState.SCHEDULED,
@@ -89,14 +94,14 @@ class RedisSeedDataConfig(
         return toon
     }
 
-    private val viewCountMap = mutableMapOf<ToonEntity, Double>()
+    private val viewCountMap = mutableMapOf<ToonDto, Double>()
 
     private fun setViewCount(
-        toon: ToonEntity,
+        toon: ToonDto,
         count: Double,
     ) {
         viewCountMap[toon] = count
     }
 
-    private fun getViewCount(toon: ToonEntity): Double = viewCountMap[toon] ?: 0.0
+    private fun getViewCount(toon: ToonDto): Double = viewCountMap[toon] ?: 0.0
 }
