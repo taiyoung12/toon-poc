@@ -4,6 +4,7 @@ import com.comics.lezhin.toon.poc.app.annotation.ApplicationLayer
 import com.comics.lezhin.toon.poc.common.enums.toon.SourceType
 import com.comics.lezhin.toon.poc.entity.ToonEntity
 import com.comics.lezhin.toon.poc.entity.ToonPricePolicyEntity
+import com.comics.lezhin.toon.poc.entity.UserCoinEntity
 import com.comics.lezhin.toon.poc.service.auth.UserReader
 import com.comics.lezhin.toon.poc.service.coin.CoinTransactionSaver
 import com.comics.lezhin.toon.poc.service.coin.UserCoinReader
@@ -27,7 +28,7 @@ class ToonApplication(
     fun purchase(
         userId: Long,
         toonId: Long,
-    ) {
+    ): Int {
         val userEntity = userReader.getBy(id = userId)
         val toonEntity = toonReader.getToonBy(id = toonId)
         toonEntity.filter(userEntity = userEntity)
@@ -36,12 +37,15 @@ class ToonApplication(
         val deductBalance = caculateBalance(toonPricePolicyEntity, toonEntity)
         val sourceType = determineSourceType(toonPricePolicyEntity)
 
-        executePurchaseTransaction(
-            userId = userId,
-            toonId = toonId,
-            deductBalance = deductBalance,
-            sourceType = sourceType,
-        )
+        val userCoinEntity =
+            executePurchaseTransaction(
+                userId = userId,
+                toonId = toonId,
+                deductBalance = deductBalance,
+                sourceType = sourceType,
+            )
+
+        return userCoinEntity.balance
     }
 
     fun executePurchaseTransaction(
@@ -49,7 +53,7 @@ class ToonApplication(
         toonId: Long,
         deductBalance: Int,
         sourceType: SourceType,
-    ) {
+    ): UserCoinEntity {
         val userCoinEntity = userCoinReader.getUserCoinBy(userId = userId)
 
         userCoinUpdater.decreaseCoin(userCoinEntity = userCoinEntity, deductBalance = deductBalance)
@@ -66,6 +70,8 @@ class ToonApplication(
             toonId = toonId,
             deductBalance = deductBalance,
         )
+
+        return userCoinEntity
     }
 
     private fun determineSourceType(toonPricePolicyEntity: ToonPricePolicyEntity?): SourceType {
