@@ -12,4 +12,6 @@ interface UserCoinRepository : Repository<UserCoinEntity, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT uc FROM UserCoinEntity uc WHERE uc.userId = :userId")
     fun findByUserIdForUpdate(userId: Long): UserCoinEntity?
+
+    fun save(userCoinEntity: UserCoinEntity)
 }
