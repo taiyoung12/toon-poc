@@ -4,7 +4,7 @@ import com.comics.lezhin.toon.poc.common.enums.toon.Genre
 import com.comics.lezhin.toon.poc.common.enums.toon.PriceType
 import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
 import com.comics.lezhin.toon.poc.common.enums.toon.ToonState
-import com.comics.lezhin.toon.poc.entity.ToonEntity
+import com.comics.lezhin.toon.poc.inmemory.dto.ToonDto
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonRankingDto
 
 object ToonFixture {
@@ -13,9 +13,9 @@ object ToonFixture {
 
         for (i in 1..10) {
             val toon =
-                ToonEntity(
+                ToonDto(
                     title = "웹툰 $i",
-                    isAdultOnly = isAdultOnly,
+                    adultOnly = isAdultOnly,
                     price = 200 + i * 10,
                     priceType = if (i % 2 == 0) PriceType.PAID else PriceType.FREE,
                     toonState = if (i % 2 == 0) ToonState.COMPLETED else ToonState.SCHEDULED,

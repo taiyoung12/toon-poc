@@ -8,6 +8,7 @@ import com.comics.lezhin.toon.poc.entity.ToonEntity
 import com.comics.lezhin.toon.poc.entity.ToonPricePolicyEntity
 import com.comics.lezhin.toon.poc.entity.UserCoinEntity
 import com.comics.lezhin.toon.poc.entity.UserEntity
+import com.comics.lezhin.toon.poc.inmemory.dto.ToonDto
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonRankingDto
 import java.time.LocalDate
 
@@ -64,9 +65,9 @@ object ToonFixture {
 
         for (i in 1..10) {
             val toon =
-                ToonEntity(
+                ToonDto(
                     title = "웹툰 $i",
-                    isAdultOnly = false,
+                    adultOnly = false,
                     price = 200 + i * 10,
                     priceType = if (i % 2 == 0) PriceType.PAID else PriceType.FREE,
                     toonState = if (i % 2 == 0) ToonState.COMPLETED else ToonState.SCHEDULED,
@@ -85,9 +86,9 @@ object ToonFixture {
 
         for (i in 1..10) {
             val toon =
-                ToonEntity(
+                ToonDto(
                     title = "웹툰 $i",
-                    isAdultOnly = if (i % 2 == 0) true else false,
+                    adultOnly = if (i % 2 == 0) true else false,
                     price = 200 + i * 10,
                     priceType = if (i % 2 == 0) PriceType.PAID else PriceType.FREE,
                     toonState = if (i % 2 == 0) ToonState.COMPLETED else ToonState.SCHEDULED,
