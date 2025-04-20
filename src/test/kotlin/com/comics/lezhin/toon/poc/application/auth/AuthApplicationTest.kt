@@ -57,14 +57,14 @@ class AuthApplicationTest {
 
         `when`(userReader.getUserBy(email)).thenReturn(user)
         `when`(passwordMatcher.matches(rawPassword, encodedPassword)).thenReturn(true)
-        `when`(jwtGenerator.generateAccessToken(email)).thenReturn(token)
+        `when`(jwtGenerator.generateAccessToken(user.getId().toString())).thenReturn(token)
 
         val actual = sut.signin(email, rawPassword)
 
         assertEquals(token, actual)
         verify(userReader, times(1)).getUserBy(email)
         verify(passwordMatcher, times(1)).matches(rawPassword, encodedPassword)
-        verify(jwtGenerator, times(1)).generateAccessToken(email)
+        verify(jwtGenerator, times(1)).generateAccessToken(user.getId().toString())
     }
 
     @Test

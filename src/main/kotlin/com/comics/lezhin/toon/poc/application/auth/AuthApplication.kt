@@ -23,7 +23,7 @@ class AuthApplication(
             throw BaseException(AuthCode.NOT_MATCHED_USER_PASSWORD)
         }
 
-        return jwtGenerator.generateAccessToken(user.email)
+        return jwtGenerator.generateAccessToken(user.getId().toString())
     }
 
     private fun passwordMatch(
