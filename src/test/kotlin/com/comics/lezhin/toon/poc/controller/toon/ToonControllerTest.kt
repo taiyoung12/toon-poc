@@ -249,8 +249,8 @@ class ToonControllerTest : BaseApiTest() {
                 document(
                     "toon/rank/success",
                     responseFields(
-                        fieldWithPath("code").description(ToonViewCode.SUCCESS.getCode()),
-                        fieldWithPath("message").description(ToonViewCode.SUCCESS.getMessage()),
+                        fieldWithPath("code").description(ToonCode.SUCCESS_READ_POPULAR_TOON.getCode()),
+                        fieldWithPath("message").description(ToonCode.SUCCESS_READ_POPULAR_TOON.getMessage()),
                         fieldWithPath("data").description("응답 데이터"),
                         fieldWithPath("data.rankings").description("인기 웹툰 랭킹 목록"),
                         fieldWithPath("data.rankings[].title").description("웹툰 제목"),
@@ -295,8 +295,8 @@ class ToonControllerTest : BaseApiTest() {
                 document(
                     "toon/purchase/rank/success",
                     responseFields(
-                        fieldWithPath("code").description(ToonViewCode.SUCCESS.getCode()),
-                        fieldWithPath("message").description(ToonViewCode.SUCCESS.getMessage()),
+                        fieldWithPath("code").description(ToonCode.SUCCESS_READ_PURCHASE_TOON.getCode()),
+                        fieldWithPath("message").description(ToonCode.SUCCESS_READ_PURCHASE_TOON.getMessage()),
                         fieldWithPath("data").description("응답 데이터"),
                         fieldWithPath("data.rankings").description("인기 웹툰 랭킹 목록"),
                         fieldWithPath("data.rankings[].title").description("웹툰 제목"),

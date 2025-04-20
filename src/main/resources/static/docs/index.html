@@ -783,9 +783,9 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 271
+Content-Length: 268
 
-{"code":"TV200","message":"성공","data":{"viewHistories":[{"name":"한우진","email":"lezhin1@test.com","viewedAt":["2025-04-21T01:59:05.362389","2025-04-20T01:59:05.362389"]},{"name":"도가영","email":"lezhin2@test.com","viewedAt":["2025-04-19T01:59:05.362389"]}]}}</code></pre>
+{"code":"TV200","message":"성공","data":{"viewHistories":[{"name":"한우진","email":"lezhin1@test.com","viewedAt":["2025-04-21T02:02:53.32604","2025-04-20T02:02:53.32604"]},{"name":"도가영","email":"lezhin2@test.com","viewedAt":["2025-04-19T02:02:53.32604"]}]}}</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -968,12 +968,12 @@ Host: localhost:8080</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TV200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TR200</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">성공</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">인기 작품 조회에 성공하였습니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
@@ -1001,9 +1001,9 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 168
+Content-Length: 208
 
-{"code":"TV200","message":"성공","data":{"rankings":[{"title":"인기 웹툰 1","rank":1},{"title":"인기 웹툰 2","rank":2},{"title":"인기 웹툰 3","rank":3}]}}</code></pre>
+{"code":"TR200","message":"인기 작품 조회에 성공하였습니다.","data":{"rankings":[{"title":"인기 웹툰 1","rank":1},{"title":"인기 웹툰 2","rank":2},{"title":"인기 웹툰 3","rank":3}]}}</code></pre>
 </div>
 </div>
 </div>
@@ -1046,12 +1046,12 @@ Host: localhost:8080</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TV200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TPR200</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">성공</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">인기 구매 작품 조회에 성공하였습니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
@@ -1079,9 +1079,9 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 189
+Content-Length: 237
 
-{"code":"TV200","message":"성공","data":{"rankings":[{"title":"구매 인기 웹툰 1","rank":1},{"title":"구매 인기 웹툰 2","rank":2},{"title":"구매 인기 웹툰 3","rank":3}]}}</code></pre>
+{"code":"TPR200","message":"인기 구매 작품 조회에 성공하였습니다.","data":{"rankings":[{"title":"구매 인기 웹툰 1","rank":1},{"title":"구매 인기 웹툰 2","rank":2},{"title":"구매 인기 웹툰 3","rank":3}]}}</code></pre>
 </div>
 </div>
 </div>

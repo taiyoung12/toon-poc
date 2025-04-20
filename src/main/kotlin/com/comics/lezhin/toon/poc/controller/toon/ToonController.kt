@@ -46,7 +46,7 @@ class ToonController(
         @UserId userId: Long,
     ): Response<ReadToonRankResponse> {
         val response = toonViewApplication.readTop10(userId = userId)
-        return Response.success(ToonViewCode.SUCCESS, response)
+        return Response.success(ToonCode.SUCCESS_READ_POPULAR_TOON, response)
     }
 
     @GetMapping("/purchase/rank")
@@ -54,6 +54,6 @@ class ToonController(
         @UserId userId: Long,
     ): Response<ReadToonPurchaseResponse> {
         val response = toonPurchaseApplication.readTop10()
-        return Response.success(ToonViewCode.SUCCESS, response)
+        return Response.success(ToonCode.SUCCESS_READ_PURCHASE_TOON, response)
     }
 }
