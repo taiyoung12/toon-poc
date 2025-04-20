@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 class ToonPurchaseEntity(
     userId: Long,
     toonId: Long,
+    toonPricePolicyId: Long,
     purchasedAt: LocalDateTime,
     price: Int,
 ) : BaseEntity() {
@@ -19,6 +20,10 @@ class ToonPurchaseEntity(
 
     @Column(name = "toon_id", nullable = false)
     var toonId: Long = toonId
+        protected set
+
+    @Column(name = "toon_price_policy_id", nullable = false)
+    var toonPricePolicyId: Long = toonPricePolicyId
         protected set
 
     @Column(name = "purchased_at", nullable = false)
