@@ -10,6 +10,7 @@ spring:
       host: localhost
       port: 6389
       password: lezhin123
+      timeout: 5
 
   sql:
     init:
