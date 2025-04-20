@@ -25,4 +25,10 @@ class UserReader(
         val userEntityList = userRepository.findAllByIdIn(idList = idList)
         return userEntityList
     }
+
+    @Transactional(readOnly = true)
+    fun getBy(id: Long): UserEntity {
+        val userEntityList = userRepository.findById(id = id) ?: throw BaseException(AuthCode.NOT_FOUND_USER_BY_ID)
+        return userEntityList
+    }
 }
