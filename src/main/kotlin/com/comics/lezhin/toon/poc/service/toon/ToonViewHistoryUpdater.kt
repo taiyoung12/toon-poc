@@ -7,11 +7,11 @@ import java.time.LocalDateTime
 @Service
 class ToonViewHistoryUpdater {
     fun deleteAll(
-        time: LocalDateTime,
-        toonViewHistoryEntityList: List<ToonViewHistoryEntity>,
+        deletedAt: LocalDateTime,
+        toonViewHistoryEntityList: List<ToonViewHistoryEntity>?,
     ) {
-        toonViewHistoryEntityList.map {
-            it.delete(deletedAt = time)
+        toonViewHistoryEntityList?.map {
+            it.delete(deletedAt = deletedAt)
         }
     }
 }
