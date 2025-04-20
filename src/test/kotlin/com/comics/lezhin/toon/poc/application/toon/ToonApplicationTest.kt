@@ -19,6 +19,7 @@ import com.comics.lezhin.toon.poc.service.coin.UserCoinReader
 import com.comics.lezhin.toon.poc.service.coin.UserCoinUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonPricePolicyReader
 import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseSaver
+import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonReader
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -52,6 +53,9 @@ class ToonApplicationTest {
     private lateinit var toonPurchaseSaver: ToonPurchaseSaver
 
     @Mock
+    private lateinit var toonPurchaseUpdater: ToonPurchaseUpdater
+
+    @Mock
     private lateinit var userReader: UserReader
 
     private lateinit var sut: ToonApplication
@@ -66,6 +70,7 @@ class ToonApplicationTest {
                 userCoinUpdater = userCoinUpdater,
                 coinTransactionSaver = coinTransactionSaver,
                 toonPurchaseSaver = toonPurchaseSaver,
+                toonPurchaseUpdater = toonPurchaseUpdater,
                 userReader = userReader,
             )
     }
@@ -77,6 +82,7 @@ class ToonApplicationTest {
         `when`(toonPricePolicyReader.findToonPricePolicyBy(toonId)).thenReturn(null)
         `when`(userCoinReader.getUserCoinBy(userId)).thenReturn(userCoinEntity)
         `when`(userCoinUpdater.decreaseCoin(userCoinEntity, toonPrice)).thenReturn(userCoinEntity)
+        doNothing().`when`(toonPurchaseUpdater).updatePurchaseCount(toonId)
 
         sut.purchase(userId, toonId)
 
@@ -92,6 +98,7 @@ class ToonApplicationTest {
             toonPrice,
         )
         verify(toonPurchaseSaver, times(1)).save(userId, toonId, toonPrice)
+        verify(toonPurchaseUpdater, times(1)).updatePurchaseCount(toonId)
     }
 
     @Test
@@ -101,6 +108,7 @@ class ToonApplicationTest {
         `when`(toonPricePolicyReader.findToonPricePolicyBy(toonId)).thenReturn(toonPricePolicyEntity)
         `when`(userCoinReader.getUserCoinBy(userId)).thenReturn(userCoinEntity)
         `when`(userCoinUpdater.decreaseCoin(userCoinEntity, eventPrice)).thenReturn(userCoinEntity)
+        doNothing().`when`(toonPurchaseUpdater).updatePurchaseCount(toonId)
 
         sut.purchase(userId, toonId)
 
@@ -113,6 +121,7 @@ class ToonApplicationTest {
             eventPrice,
         )
         verify(toonPurchaseSaver, times(1)).save(userId, toonId, eventPrice)
+        verify(toonPurchaseUpdater, times(1)).updatePurchaseCount(toonId)
     }
 
     @Test
