@@ -473,6 +473,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_success_인기_작품_top10">Success 인기 작품 Top10</a></li>
 </ul>
 </li>
+<li><a href="#_purchase_toon_read_api">Purchase Toon Read API</a>
+<ul class="sectlevel2">
+<li><a href="#_success_인기_구매_작품_top10">Success 인기 구매 작품 Top10</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -780,7 +785,7 @@ Host: localhost:8080</code></pre>
 Content-Type: application/json
 Content-Length: 271
 
-{"code":"TV200","message":"성공","data":{"viewHistories":[{"name":"한우진","email":"lezhin1@test.com","viewedAt":["2025-04-21T01:15:55.653754","2025-04-20T01:15:55.653754"]},{"name":"도가영","email":"lezhin2@test.com","viewedAt":["2025-04-19T01:15:55.653754"]}]}}</code></pre>
+{"code":"TV200","message":"성공","data":{"viewHistories":[{"name":"한우진","email":"lezhin1@test.com","viewedAt":["2025-04-21T01:59:05.362389","2025-04-20T01:59:05.362389"]},{"name":"도가영","email":"lezhin2@test.com","viewedAt":["2025-04-19T01:59:05.362389"]}]}}</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -933,14 +938,14 @@ Content-Length: 91
 <h3 id="_success_인기_작품_top10"><a class="link" href="#_success_인기_작품_top10">Success 인기 작품 Top10</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/toon/rank' -i -X GET \
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/toon/popular/rank' -i -X GET \
     -H 'Authorization: Bearer dummy-token' \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/toon/rank HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/toon/popular/rank HTTP/1.1
 Authorization: Bearer dummy-token
 Accept: application/json
 Host: localhost:8080</code></pre>
@@ -1004,11 +1009,89 @@ Content-Length: 168
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_purchase_toon_read_api"><a class="link" href="#_purchase_toon_read_api">Purchase Toon Read API</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_success_인기_구매_작품_top10"><a class="link" href="#_success_인기_구매_작품_top10">Success 인기 구매 작품 Top10</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/api/v1/toon/purchase/rank' -i -X GET \
+    -H 'Authorization: Bearer dummy-token' \
+    -H 'Accept: application/json'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/v1/toon/purchase/rank HTTP/1.1
+Authorization: Bearer dummy-token
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TV200</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">성공</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 데이터</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.rankings</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">인기 웹툰 랭킹 목록</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.rankings[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">웹툰 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.rankings[].rank</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">웹툰 순위</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 189
+
+{"code":"TV200","message":"성공","data":{"rankings":[{"title":"구매 인기 웹툰 1","rank":1},{"title":"구매 인기 웹툰 2","rank":2},{"title":"구매 인기 웹툰 3","rank":3}]}}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2025-04-21 00:55:24 +0900
+Last updated 2025-04-21 01:58:56 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

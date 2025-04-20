@@ -74,3 +74,11 @@ include::{snippets}/toon/rank/success/curl-request.adoc[]
 include::{snippets}/toon/rank/success/http-request.adoc[]
 include::{snippets}/toon/rank/success/response-fields.adoc[]
 include::{snippets}/toon/rank/success/http-response.adoc[]
+
+== Purchase Toon Read API
+
+=== Success 인기 구매 작품 Top10
+include::{snippets}/toon/purchase/rank/success/curl-request.adoc[]
+include::{snippets}/toon/purchase/rank/success/http-request.adoc[]
+include::{snippets}/toon/purchase/rank/success/response-fields.adoc[]
+include::{snippets}/toon/purchase/rank/success/http-response.adoc[]

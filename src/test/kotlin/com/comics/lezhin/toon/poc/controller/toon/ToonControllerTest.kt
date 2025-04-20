@@ -2,11 +2,14 @@ package com.comics.lezhin.toon.poc.controller.toon
 
 import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.application.toon.ToonApplication
+import com.comics.lezhin.toon.poc.application.toon.ToonPurchaseApplication
 import com.comics.lezhin.toon.poc.application.toon.ToonViewApplication
 import com.comics.lezhin.toon.poc.common.code.CoinCode
 import com.comics.lezhin.toon.poc.common.code.ToonCode
 import com.comics.lezhin.toon.poc.common.code.ToonViewCode
 import com.comics.lezhin.toon.poc.controller.BaseApiTest
+import com.comics.lezhin.toon.poc.controller.response.PurchaseToonRankDto
+import com.comics.lezhin.toon.poc.controller.response.ReadToonPurchaseResponse
 import com.comics.lezhin.toon.poc.controller.response.ReadToonRankResponse
 import com.comics.lezhin.toon.poc.controller.response.ReadToonViewHistoryResponse
 import com.comics.lezhin.toon.poc.controller.response.ToonRankDto
@@ -39,7 +42,7 @@ class ToonControllerTest : BaseApiTest() {
     private lateinit var toonApplication: ToonApplication
 
     @MockitoBean
-    private lateinit var toonPurchaseApplication: ToonApplication
+    private lateinit var toonPurchaseApplication: ToonPurchaseApplication
 
     @BeforeEach
     fun setUp() {
@@ -237,7 +240,7 @@ class ToonControllerTest : BaseApiTest() {
 
         mockMvc
             .perform(
-                get("/api/v1/toon/rank")
+                get("/api/v1/toon/popular/rank")
                     .header("Authorization", "Bearer dummy-token")
                     .accept(MediaType.APPLICATION_JSON),
             ).andExpect(status().isOk)
@@ -245,6 +248,52 @@ class ToonControllerTest : BaseApiTest() {
             .andDo(
                 document(
                     "toon/rank/success",
+                    responseFields(
+                        fieldWithPath("code").description(ToonViewCode.SUCCESS.getCode()),
+                        fieldWithPath("message").description(ToonViewCode.SUCCESS.getMessage()),
+                        fieldWithPath("data").description("응답 데이터"),
+                        fieldWithPath("data.rankings").description("인기 웹툰 랭킹 목록"),
+                        fieldWithPath("data.rankings[].title").description("웹툰 제목"),
+                        fieldWithPath("data.rankings[].rank").description("웹툰 순위"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    fun `구매 인기 웹툰 Top 10을 조회할 수 있다`() {
+        val userId = 1L
+        val response =
+            ReadToonPurchaseResponse(
+                rankings =
+                    listOf(
+                        PurchaseToonRankDto(
+                            title = "구매 인기 웹툰 1",
+                            rank = 1,
+                        ),
+                        PurchaseToonRankDto(
+                            title = "구매 인기 웹툰 2",
+                            rank = 2,
+                        ),
+                        PurchaseToonRankDto(
+                            title = "구매 인기 웹툰 3",
+                            rank = 3,
+                        ),
+                    ),
+            )
+
+        `when`(toonPurchaseApplication.readTop10()).thenReturn(response)
+
+        mockMvc
+            .perform(
+                get("/api/v1/toon/purchase/rank")
+                    .header("Authorization", "Bearer dummy-token")
+                    .accept(MediaType.APPLICATION_JSON),
+            ).andExpect(status().isOk)
+            .andDo(print())
+            .andDo(
+                document(
+                    "toon/purchase/rank/success",
                     responseFields(
                         fieldWithPath("code").description(ToonViewCode.SUCCESS.getCode()),
                         fieldWithPath("message").description(ToonViewCode.SUCCESS.getMessage()),

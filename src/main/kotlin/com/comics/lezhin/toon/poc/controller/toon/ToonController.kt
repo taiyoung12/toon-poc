@@ -41,7 +41,7 @@ class ToonController(
         return Response.success(ToonCode.TOON_PURCHASE_SUCCESS, PurchaseToonResponse(response))
     }
 
-    @GetMapping("/rank")
+    @GetMapping("/popular/rank")
     fun readPopularToon(
         @UserId userId: Long,
     ): Response<ReadToonRankResponse> {
