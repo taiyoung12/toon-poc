@@ -8,6 +8,7 @@ import com.comics.lezhin.toon.poc.entity.ToonEntity
 import com.comics.lezhin.toon.poc.entity.ToonPricePolicyEntity
 import com.comics.lezhin.toon.poc.entity.UserCoinEntity
 import com.comics.lezhin.toon.poc.entity.UserEntity
+import com.comics.lezhin.toon.poc.inmemory.dto.ToonRankingDto
 import java.time.LocalDate
 
 object ToonFixture {
@@ -57,4 +58,46 @@ object ToonFixture {
             endDate = LocalDate.now().plusDays(2),
             price = eventPrice,
         )
+
+    fun createToonRankings(): List<ToonRankingDto> {
+        val rankings = mutableListOf<ToonRankingDto>()
+
+        for (i in 1..10) {
+            val toon =
+                ToonEntity(
+                    title = "웹툰 $i",
+                    isAdultOnly = false,
+                    price = 200 + i * 10,
+                    priceType = if (i % 2 == 0) PriceType.PAID else PriceType.FREE,
+                    toonState = if (i % 2 == 0) ToonState.COMPLETED else ToonState.SCHEDULED,
+                    genre = Genre.entries[i % Genre.entries.size],
+                    scheduleDay = ScheduleDay.entries[i % ScheduleDay.entries.size],
+                )
+
+            rankings.add(ToonRankingDto(toon, (11 - i) * 100.0))
+        }
+
+        return rankings
+    }
+
+    fun createGeneralToonRankings(): List<ToonRankingDto> {
+        val rankings = mutableListOf<ToonRankingDto>()
+
+        for (i in 1..10) {
+            val toon =
+                ToonEntity(
+                    title = "웹툰 $i",
+                    isAdultOnly = if (i % 2 == 0) true else false,
+                    price = 200 + i * 10,
+                    priceType = if (i % 2 == 0) PriceType.PAID else PriceType.FREE,
+                    toonState = if (i % 2 == 0) ToonState.COMPLETED else ToonState.SCHEDULED,
+                    genre = Genre.entries[i % Genre.entries.size],
+                    scheduleDay = ScheduleDay.entries[i % ScheduleDay.entries.size],
+                )
+
+            rankings.add(ToonRankingDto(toon, (11 - i) * 100.0))
+        }
+
+        return rankings
+    }
 }
