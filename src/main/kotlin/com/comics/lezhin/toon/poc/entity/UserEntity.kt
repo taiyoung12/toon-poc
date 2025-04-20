@@ -31,4 +31,11 @@ class UserEntity(
     @Column(name = "age", nullable = false)
     var age: Int = age
         protected set
+
+    fun filter(): Boolean {
+        if (this.age < 20) {
+            return false
+        }
+        return true
+    }
 }
