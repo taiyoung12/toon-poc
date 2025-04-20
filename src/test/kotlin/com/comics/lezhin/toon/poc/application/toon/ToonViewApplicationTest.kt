@@ -1,11 +1,14 @@
 package com.comics.lezhin.toon.poc.application.toon
 
+import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.createGeneralToonRankings
+import com.comics.lezhin.toon.poc.application.toon.fixture.ToonFixture.createToonRankings
 import com.comics.lezhin.toon.poc.controller.response.ReadToonViewHistoryResponse
 import com.comics.lezhin.toon.poc.controller.response.toResponse
 import com.comics.lezhin.toon.poc.entity.BaseEntity
 import com.comics.lezhin.toon.poc.entity.ToonViewHistoryEntity
 import com.comics.lezhin.toon.poc.entity.UserEntity
 import com.comics.lezhin.toon.poc.service.auth.UserReader
+import com.comics.lezhin.toon.poc.service.toon.ToonReader
 import com.comics.lezhin.toon.poc.service.toon.ToonViewHistoryReader
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -31,6 +34,9 @@ class ToonViewApplicationTest {
     @Mock
     private lateinit var userReader: UserReader
 
+    @Mock
+    private lateinit var toonReader: ToonReader
+
     private lateinit var sut: ToonViewApplication
 
     @BeforeEach
@@ -39,6 +45,7 @@ class ToonViewApplicationTest {
             ToonViewApplication(
                 toonViewHistoryReader = toonViewHistoryReader,
                 userReader = userReader,
+                toonReader = toonReader,
             )
     }
 
@@ -107,5 +114,41 @@ class ToonViewApplicationTest {
         assertNull(actual)
         verify(toonViewHistoryReader, times(1)).findToonViewHistoryListBy(toonId)
         verify(userReader, never()).findAllUserBy(anyList())
+    }
+
+    @Test
+    fun `성인 유저는 성인 웹툰 랭킹을 조회할 수 있다`() {
+        val userId = 1L
+        val adultUser = UserEntity(email = "lezhin1@test.com", password = "lezhin123!", name = "한우진", age = 20)
+        val toonRankings = createGeneralToonRankings()
+
+        `when`(userReader.getBy(userId)).thenReturn(adultUser)
+        `when`(toonReader.findPopularAdultToonTop10()).thenReturn(toonRankings)
+
+        val actual = sut.readTop10(userId)
+
+        assertEquals(1, actual.rankings[0].rank)
+
+        verify(userReader, times(1)).getBy(userId)
+        verify(toonReader, times(1)).findPopularAdultToonTop10()
+        verify(toonReader, never()).findPopularGeneralToonTop10()
+    }
+
+    @Test
+    fun `미성년자 유저는 일반 웹툰 랭킹을 조회할 수 있다`() {
+        val userId = 1L
+        val minorUser = UserEntity(email = "lezhin1@test.com", password = "lezhin123!", name = "도가영", age = 19)
+        val toonRankings = createToonRankings()
+
+        `when`(userReader.getBy(userId)).thenReturn(minorUser)
+        `when`(toonReader.findPopularGeneralToonTop10()).thenReturn(toonRankings)
+
+        val actual = sut.readTop10(userId)
+
+        assertEquals(1, actual.rankings[0].rank)
+
+        verify(userReader, times(1)).getBy(userId)
+        verify(toonReader, never()).findPopularAdultToonTop10()
+        verify(toonReader, times(1)).findPopularGeneralToonTop10()
     }
 }

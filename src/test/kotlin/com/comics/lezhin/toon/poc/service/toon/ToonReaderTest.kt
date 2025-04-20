@@ -7,7 +7,9 @@ import com.comics.lezhin.toon.poc.common.enums.toon.PriceType
 import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
 import com.comics.lezhin.toon.poc.common.enums.toon.ToonState
 import com.comics.lezhin.toon.poc.entity.ToonEntity
+import com.comics.lezhin.toon.poc.inmemory.ViewRepository
 import com.comics.lezhin.toon.poc.repository.ToonRepository
+import com.comics.lezhin.toon.poc.service.fixtures.ToonFixture.createMockToonRankings
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -24,6 +26,9 @@ class ToonReaderTest {
     @Mock
     private lateinit var toonRepository: ToonRepository
 
+    @Mock
+    private lateinit var viewRepository: ViewRepository
+
     private lateinit var sut: ToonReader
 
     @BeforeEach
@@ -31,6 +36,7 @@ class ToonReaderTest {
         sut =
             ToonReader(
                 toonRepository = toonRepository,
+                viewRepository = viewRepository,
             )
     }
 
@@ -68,5 +74,27 @@ class ToonReaderTest {
 
         assertEquals(ToonCode.NOT_FOUND_TOON_BY_ID, actual.code)
         verify(toonRepository, times(1)).findById(id = toonId)
+    }
+
+    @Test
+    fun `성인용 인기 웹툰 TOP 10을 조회할 수 있다`() {
+        val expectedRankings = createMockToonRankings(isAdultOnly = true)
+        `when`(viewRepository.getAdultTop10()).thenReturn(expectedRankings)
+
+        val actual = sut.findPopularAdultToonTop10()
+
+        assertEquals(expectedRankings, actual)
+        verify(viewRepository, times(1)).getAdultTop10()
+    }
+
+    @Test
+    fun `일반 인기 웹툰 TOP 10을 조회할 수 있다`() {
+        val expectedRankings = createMockToonRankings(isAdultOnly = false)
+        `when`(viewRepository.getGeneralTop10()).thenReturn(expectedRankings)
+
+        val actual = sut.findPopularGeneralToonTop10()
+
+        assertEquals(expectedRankings, actual)
+        verify(viewRepository, times(1)).getGeneralTop10()
     }
 }

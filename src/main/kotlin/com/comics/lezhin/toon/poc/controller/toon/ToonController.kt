@@ -7,6 +7,7 @@ import com.comics.lezhin.toon.poc.application.toon.ToonViewApplication
 import com.comics.lezhin.toon.poc.common.code.ToonCode
 import com.comics.lezhin.toon.poc.common.code.ToonViewCode
 import com.comics.lezhin.toon.poc.controller.response.PurchaseToonResponse
+import com.comics.lezhin.toon.poc.controller.response.ReadToonRankResponse
 import com.comics.lezhin.toon.poc.controller.response.ReadToonViewHistoryResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -35,5 +36,13 @@ class ToonController(
     ): Response<PurchaseToonResponse> {
         val response = toonApplication.purchase(userId = userId, toonId = toonId)
         return Response.success(ToonCode.TOON_PURCHASE_SUCCESS, PurchaseToonResponse(response))
+    }
+
+    @GetMapping("/rank")
+    fun readPopularToon(
+        @UserId userId: Long,
+    ): Response<ReadToonRankResponse> {
+        val response = toonViewApplication.readTop10(userId = userId)
+        return Response.success(ToonViewCode.SUCCESS, response)
     }
 }

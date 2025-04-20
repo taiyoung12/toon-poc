@@ -60,7 +60,7 @@ class ToonEntity(
         protected set
 
     fun filter(userEntity: UserEntity) {
-        if (this.isAdultOnly && userEntity.age < 20) {
+        if (this.isAdultOnly && !userEntity.filter()) {
             throw BaseException(ToonCode.FILTER_MINOR)
         }
     }
