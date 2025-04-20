@@ -6,11 +6,13 @@ import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
 import com.comics.lezhin.toon.poc.common.enums.toon.ToonState
 import com.comics.lezhin.toon.poc.entity.ToonEntity
 import com.comics.lezhin.toon.poc.entity.ToonPricePolicyEntity
+import com.comics.lezhin.toon.poc.entity.ToonViewHistoryEntity
 import com.comics.lezhin.toon.poc.entity.UserCoinEntity
 import com.comics.lezhin.toon.poc.entity.UserEntity
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonDto
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonRankingDto
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 object ToonFixture {
     const val userId = 1L
@@ -44,6 +46,11 @@ object ToonFixture {
             toonState = ToonState.SCHEDULED,
             genre = Genre.ACTION,
             scheduleDay = ScheduleDay.MONDAY,
+        )
+
+    val toonViewHistoryEntityList =
+        listOf(
+            ToonViewHistoryEntity(userId = userId, toonId = toonId, viewedAt = LocalDateTime.now()),
         )
 
     val userCoinEntity =

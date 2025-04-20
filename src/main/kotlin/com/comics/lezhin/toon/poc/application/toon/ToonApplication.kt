@@ -15,7 +15,6 @@ import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonReader
 import com.comics.lezhin.toon.poc.service.toon.ToonUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonViewHistoryReader
-import com.comics.lezhin.toon.poc.service.toon.ToonViewHistoryUpdater
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
@@ -31,7 +30,6 @@ class ToonApplication(
     private val userReader: UserReader,
     private val toonViewHistoryReader: ToonViewHistoryReader,
     private val toonUpdater: ToonUpdater,
-    private val toonViewHistoryUpdater: ToonViewHistoryUpdater,
 ) {
     @Transactional
     fun purchase(
@@ -43,7 +41,7 @@ class ToonApplication(
         toonEntity.filter(userEntity = userEntity)
 
         val toonPricePolicyEntity = toonPricePolicyReader.findToonPricePolicyBy(toonId = toonId)
-        val deductBalance = caculateBalance(toonPricePolicyEntity, toonEntity)
+        val deductBalance = calculateBalance(toonPricePolicyEntity, toonEntity)
         val sourceType = determineSourceType(toonPricePolicyEntity)
 
         val userCoinEntity =
@@ -58,11 +56,12 @@ class ToonApplication(
     }
 
     @Transactional
-    fun deleteToonAllInfo(toonId: Long) {
+    fun deleteToonAllInfo(
+        deletedAt: LocalDateTime,
+        toonId: Long,
+    ) {
         val toonEntity = toonReader.getToonBy(id = toonId)
         val toonViewHistoryEntityList = toonViewHistoryReader.findToonViewHistoryListBy(id = toonId)
-
-        val deletedAt = LocalDateTime.now()
 
         toonUpdater.deleteAll(
             deletedAt = deletedAt,
@@ -104,7 +103,7 @@ class ToonApplication(
         return sourceType
     }
 
-    private fun caculateBalance(
+    private fun calculateBalance(
         toonPricePolicyEntity: ToonPricePolicyEntity?,
         toonEntity: ToonEntity,
     ): Int {
