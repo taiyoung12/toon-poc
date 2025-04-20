@@ -11,6 +11,7 @@ import com.comics.lezhin.toon.poc.service.coin.UserCoinReader
 import com.comics.lezhin.toon.poc.service.coin.UserCoinUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonPricePolicyReader
 import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseSaver
+import com.comics.lezhin.toon.poc.service.toon.ToonPurchaseUpdater
 import com.comics.lezhin.toon.poc.service.toon.ToonReader
 import org.springframework.transaction.annotation.Transactional
 
@@ -22,6 +23,7 @@ class ToonApplication(
     private val userCoinUpdater: UserCoinUpdater,
     private val coinTransactionSaver: CoinTransactionSaver,
     private val toonPurchaseSaver: ToonPurchaseSaver,
+    private val toonPurchaseUpdater: ToonPurchaseUpdater,
     private val userReader: UserReader,
 ) {
     @Transactional
@@ -70,6 +72,8 @@ class ToonApplication(
             toonId = toonId,
             deductBalance = deductBalance,
         )
+
+        toonPurchaseUpdater.updatePurchaseCount(toonId = toonId)
 
         return userCoinEntity
     }

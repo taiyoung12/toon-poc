@@ -17,6 +17,7 @@ class RedisSeedDataConfig(
     private val redisTemplate: RedisTemplate<String, Any>,
 ) {
     private val mapper = ObjectMapper()
+    private var idCounter = 1L
 
     @PostConstruct
     fun init() {
@@ -66,6 +67,12 @@ class RedisSeedDataConfig(
             adultZSet.add(RedisKeys.VIEWED_TOP_ADULT, toonDto, getViewCount(toon))
         }
 
+        val purchaseZSet = redisTemplate.opsForZSet()
+        (generalToons + adultToons).forEach { toon ->
+            val json = mapper.writeValueAsString(toon)
+            purchaseZSet.add(RedisKeys.PURCHASE_RANK_KEY, json, getPurchaseCount(toon))
+        }
+
         println("Redis 시드 데이터 초기화 완료")
     }
 
@@ -77,9 +84,11 @@ class RedisSeedDataConfig(
         genre: Genre,
         scheduleDay: ScheduleDay,
         viewCount: Double,
+        purchaseCount: Double = (100..1000).random().toDouble(),
     ): ToonDto {
         val toon =
             ToonDto(
+                id = idCounter++,
                 title = title,
                 adultOnly = isAdultOnly,
                 price = price,
@@ -90,11 +99,13 @@ class RedisSeedDataConfig(
             )
 
         setViewCount(toon, viewCount)
+        setPurchaseCount(toon, purchaseCount)
 
         return toon
     }
 
     private val viewCountMap = mutableMapOf<ToonDto, Double>()
+    private val purchaseCountMap = mutableMapOf<ToonDto, Double>()
 
     private fun setViewCount(
         toon: ToonDto,
@@ -103,5 +114,14 @@ class RedisSeedDataConfig(
         viewCountMap[toon] = count
     }
 
+    private fun setPurchaseCount(
+        toon: ToonDto,
+        count: Double,
+    ) {
+        purchaseCountMap[toon] = count
+    }
+
     private fun getViewCount(toon: ToonDto): Double = viewCountMap[toon] ?: 0.0
+
+    private fun getPurchaseCount(toon: ToonDto): Double = purchaseCountMap[toon] ?: 0.0
 }

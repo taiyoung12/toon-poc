@@ -2,21 +2,17 @@ package com.comics.lezhin.toon.poc.inmemory
 
 import com.comics.lezhin.toon.poc.inmemory.dto.ToonRankingDto
 import com.comics.lezhin.toon.poc.inmemory.dto.toRankingItem
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
 class ViewRepository(
     private val redisTemplate: RedisTemplate<String, Any>,
+    @Qualifier("redisObjectMapper")
+    private val objectMapper: ObjectMapper,
 ) {
-    private val objectMapper =
-        ObjectMapper()
-            .registerKotlinModule()
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-
     fun getAdultTop10(): List<ToonRankingDto> {
         ensureCombinedKeyExists()
 

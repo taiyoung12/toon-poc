@@ -6,6 +6,7 @@ import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
 import com.comics.lezhin.toon.poc.common.enums.toon.ToonState
 
 data class ToonDto(
+    val id: Long,
     val title: String,
     val adultOnly: Boolean,
     val price: Int,

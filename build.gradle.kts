@@ -74,15 +74,22 @@ tasks {
     asciidoctor {
         dependsOn(test)
 
+        inputs.dir(snippetsDir)
+        attributes(
+            mapOf(
+                "snippets" to snippetsDir.absolutePath.replace("\\", "/"),
+            ),
+        )
+
+        baseDirFollowsSourceFile()
+
         doFirst {
             delete(file("src/main/resources/static/docs"))
         }
 
-        inputs.dir(snippetsDir)
-
         doLast {
             copy {
-                from("build/docs/asciidoc")
+                from(outputDir)
                 into("src/main/resources/static/docs")
             }
         }

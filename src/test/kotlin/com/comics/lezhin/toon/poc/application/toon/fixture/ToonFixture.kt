@@ -66,6 +66,7 @@ object ToonFixture {
         for (i in 1..10) {
             val toon =
                 ToonDto(
+                    id = i.toLong(),
                     title = "웹툰 $i",
                     adultOnly = false,
                     price = 200 + i * 10,
@@ -87,6 +88,7 @@ object ToonFixture {
         for (i in 1..10) {
             val toon =
                 ToonDto(
+                    id = i.toLong(),
                     title = "웹툰 $i",
                     adultOnly = if (i % 2 == 0) true else false,
                     price = 200 + i * 10,
