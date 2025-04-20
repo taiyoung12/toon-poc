@@ -2,12 +2,15 @@ package com.comics.lezhin.toon.poc.controller.toon
 
 import com.comics.lezhin.toon.poc.application.toon.ToonApplication
 import com.comics.lezhin.toon.poc.application.toon.ToonViewApplication
+import com.comics.lezhin.toon.poc.common.code.ToonCode
 import com.comics.lezhin.toon.poc.common.code.ToonViewCode
 import com.comics.lezhin.toon.poc.controller.BaseApiTest
 import com.comics.lezhin.toon.poc.controller.response.ReadToonViewHistoryResponse
 import com.comics.lezhin.toon.poc.controller.response.ToonViewHistoryDto
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.`when`
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
@@ -18,6 +21,7 @@ import org.springframework.restdocs.request.RequestDocumentation.parameterWithNa
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDateTime
@@ -29,6 +33,12 @@ class ToonControllerTest : BaseApiTest() {
 
     @MockitoBean
     private lateinit var toonApplication: ToonApplication
+
+    @BeforeEach
+    fun setUp() {
+        `when`(jwtValidator.validate(anyString())).thenReturn(true)
+        `when`(jwtValidator.extractSubject(anyString())).thenReturn("1")
+    }
 
     @Test
     fun `작품 조회 이력을 조회할 수 있다`() {
@@ -101,6 +111,36 @@ class ToonControllerTest : BaseApiTest() {
                         fieldWithPath("code").description(ToonViewCode.SUCCESS.getCode()),
                         fieldWithPath("message").description(ToonViewCode.SUCCESS.getMessage()),
                         fieldWithPath("data").description("응답 데이터 (null)"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    fun `작품을 구매할 수 있다`() {
+        val toonId = 1L
+        val userId = 1L
+        val amount = 7
+
+        `when`(toonApplication.purchase(userId, toonId)).thenReturn(amount)
+
+        mockMvc
+            .perform(
+                post("/api/v1/toon/{toonId}/purchase", toonId)
+                    .header("Authorization", "Bearer dummy-token")
+                    .accept(MediaType.APPLICATION_JSON),
+            ).andExpect(status().isOk)
+            .andDo(print())
+            .andDo(
+                document(
+                    "toon/purchase/success",
+                    pathParameters(
+                        parameterWithName("toonId").description("웹툰 ID"),
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description(ToonCode.TOON_PURCHASE_SUCCESS.getCode()),
+                        fieldWithPath("message").description(ToonCode.TOON_PURCHASE_SUCCESS.getMessage()),
+                        fieldWithPath("data.balance").description("구매 후 남은 코인 잔액"),
                     ),
                 ),
             )
