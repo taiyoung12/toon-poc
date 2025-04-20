@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.common.token
+package com.comics.lezhin.toon.poc.app.token
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

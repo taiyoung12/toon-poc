@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.enums.toon
+package com.comics.lezhin.toon.poc.common.enums.toon
 
 enum class ToonState {
     SCHEDULED,

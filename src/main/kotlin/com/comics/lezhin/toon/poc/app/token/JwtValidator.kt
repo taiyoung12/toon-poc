@@ -1,7 +1,7 @@
-package com.comics.lezhin.toon.poc.common.token
+package com.comics.lezhin.toon.poc.app.token
 
+import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.common.code.JwtCode
-import com.comics.lezhin.toon.poc.common.exception.BaseException
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys

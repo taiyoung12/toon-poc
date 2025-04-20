@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.common.exception
+package com.comics.lezhin.toon.poc.app.exception
 
 import com.comics.lezhin.toon.poc.common.code.CommonCode
 

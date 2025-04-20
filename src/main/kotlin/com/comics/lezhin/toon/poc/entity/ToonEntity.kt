@@ -1,9 +1,9 @@
 package com.comics.lezhin.toon.poc.entity
 
-import com.comics.lezhin.toon.poc.enums.toon.Genre
-import com.comics.lezhin.toon.poc.enums.toon.PriceType
-import com.comics.lezhin.toon.poc.enums.toon.ScheduleDay
-import com.comics.lezhin.toon.poc.enums.toon.ToonState
+import com.comics.lezhin.toon.poc.common.enums.toon.Genre
+import com.comics.lezhin.toon.poc.common.enums.toon.PriceType
+import com.comics.lezhin.toon.poc.common.enums.toon.ScheduleDay
+import com.comics.lezhin.toon.poc.common.enums.toon.ToonState
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType

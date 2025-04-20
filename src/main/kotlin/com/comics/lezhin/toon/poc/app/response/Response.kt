@@ -1,4 +1,4 @@
-package com.comics.lezhin.toon.poc.common.response
+package com.comics.lezhin.toon.poc.app.response
 
 import com.comics.lezhin.toon.poc.common.code.Code
 import com.comics.lezhin.toon.poc.common.code.CommonCode
