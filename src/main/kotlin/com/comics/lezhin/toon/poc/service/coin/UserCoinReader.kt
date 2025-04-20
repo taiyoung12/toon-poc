@@ -13,7 +13,7 @@ class UserCoinReader(
 ) {
     @Transactional(readOnly = true)
     fun getUserCoinBy(userId: Long): UserCoinEntity {
-        val userCoinEntity = userCoinRepository.findByUserId(userId = userId) ?: throw BaseException(CoinCode.NO_CHARGE_HISTORY)
+        val userCoinEntity = userCoinRepository.findByUserIdForUpdate(userId = userId) ?: throw BaseException(CoinCode.NO_CHARGE_HISTORY)
         return userCoinEntity
     }
 }

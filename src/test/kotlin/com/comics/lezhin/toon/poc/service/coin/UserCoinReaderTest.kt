@@ -39,18 +39,18 @@ class UserCoinReaderTest {
                 balance = 30,
             )
 
-        `when`(userCoinRepository.findByUserId(userId)).thenReturn(userCoinEntity)
+        `when`(userCoinRepository.findByUserIdForUpdate(userId)).thenReturn(userCoinEntity)
 
         sut.getUserCoinBy(userId)
 
-        verify(userCoinRepository, times(1)).findByUserId(userId)
+        verify(userCoinRepository, times(1)).findByUserIdForUpdate(userId)
     }
 
     @Test
     fun `userId에 해당하는 userCoin이 없으면 예외가 발생할 수 있다`() {
         val userId = 999L
 
-        `when`(userCoinRepository.findByUserId(userId)).thenReturn(null)
+        `when`(userCoinRepository.findByUserIdForUpdate(userId)).thenReturn(null)
 
         val actual =
             assertThrows<BaseException> {
@@ -58,6 +58,6 @@ class UserCoinReaderTest {
             }
 
         assertEquals(CoinCode.NO_CHARGE_HISTORY, actual.code)
-        verify(userCoinRepository, times(1)).findByUserId(userId)
+        verify(userCoinRepository, times(1)).findByUserIdForUpdate(userId)
     }
 }
