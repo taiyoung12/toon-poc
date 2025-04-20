@@ -38,6 +38,9 @@ class ToonControllerTest : BaseApiTest() {
     @MockitoBean
     private lateinit var toonApplication: ToonApplication
 
+    @MockitoBean
+    private lateinit var toonPurchaseApplication: ToonApplication
+
     @BeforeEach
     fun setUp() {
         `when`(jwtValidator.validate(anyString())).thenReturn(true)
@@ -207,26 +210,28 @@ class ToonControllerTest : BaseApiTest() {
                 ),
             )
     }
-    
+
     @Test
     fun `인기 웹툰 Top 10을 조회할 수 있다`() {
         val userId = 1L
-        val response = ReadToonRankResponse(
-            rankings = listOf(
-                ToonRankDto(
-                    title = "인기 웹툰 1",
-                    rank = 1
-                ),
-                ToonRankDto(
-                    title = "인기 웹툰 2",
-                    rank = 2
-                ),
-                ToonRankDto(
-                    title = "인기 웹툰 3",
-                    rank = 3
-                )
+        val response =
+            ReadToonRankResponse(
+                rankings =
+                    listOf(
+                        ToonRankDto(
+                            title = "인기 웹툰 1",
+                            rank = 1,
+                        ),
+                        ToonRankDto(
+                            title = "인기 웹툰 2",
+                            rank = 2,
+                        ),
+                        ToonRankDto(
+                            title = "인기 웹툰 3",
+                            rank = 3,
+                        ),
+                    ),
             )
-        )
 
         `when`(toonViewApplication.readTop10(userId = userId)).thenReturn(response)
 
@@ -234,7 +239,7 @@ class ToonControllerTest : BaseApiTest() {
             .perform(
                 get("/api/v1/toon/rank")
                     .header("Authorization", "Bearer dummy-token")
-                    .accept(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON),
             ).andExpect(status().isOk)
             .andDo(print())
             .andDo(
@@ -246,9 +251,9 @@ class ToonControllerTest : BaseApiTest() {
                         fieldWithPath("data").description("응답 데이터"),
                         fieldWithPath("data.rankings").description("인기 웹툰 랭킹 목록"),
                         fieldWithPath("data.rankings[].title").description("웹툰 제목"),
-                        fieldWithPath("data.rankings[].rank").description("웹툰 순위")
-                    )
-                )
+                        fieldWithPath("data.rankings[].rank").description("웹툰 순위"),
+                    ),
+                ),
             )
     }
 }
