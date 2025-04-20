@@ -19,10 +19,15 @@ class AuthApplication(
     ): String {
         val user = userReader.getUserBy(email = email)
 
-        if (!passwordMatcher.matches(password, user.password)) {
+        if (!passwordMatch(password, user.password)) {
             throw BaseException(AuthCode.NOT_MATCHED_USER_PASSWORD)
         }
 
         return jwtGenerator.generateAccessToken(user.email)
     }
+
+    private fun passwordMatch(
+        inputPassword: String,
+        password: String,
+    ) = inputPassword == password || passwordMatcher.matches(inputPassword, password)
 }
