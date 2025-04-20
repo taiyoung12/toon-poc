@@ -1,9 +1,9 @@
-package com.comics.lezhin.toon.poc.controller
+package com.comics.lezhin.toon.poc.controller.auth
 
 import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.application.auth.AuthApplication
 import com.comics.lezhin.toon.poc.common.code.AuthCode
-import com.comics.lezhin.toon.poc.controller.auth.AuthController
+import com.comics.lezhin.toon.poc.controller.BaseApiTest
 import com.comics.lezhin.toon.poc.controller.request.SigninRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
