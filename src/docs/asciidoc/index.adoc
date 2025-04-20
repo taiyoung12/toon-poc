@@ -46,3 +46,23 @@ include::{snippets}/toon/view-history/success/http-response.adoc[]
 
 ==== 조회 이력이 없을 때
 include::{snippets}/toon/view-history/empty/http-response.adoc[]
+
+== Toon Purchase API
+
+=== Success 작품 구매
+include::{snippets}/toon/purchase/success/curl-request.adoc[]
+include::{snippets}/toon/purchase/success/http-request.adoc[]
+include::{snippets}/toon/purchase/success/path-parameters.adoc[]
+include::{snippets}/toon/purchase/success/response-fields.adoc[]
+include::{snippets}/toon/purchase/success/http-response.adoc[]
+
+=== 실패 케이스
+
+==== 미성년자가 성인 작품을 구매하려 할 때
+include::{snippets}/toon/purchase/filter/adult/http-request.adoc[]
+include::{snippets}/toon/purchase/filter/adult/http-response.adoc[]
+
+==== 코인이 부족할 때
+include::{snippets}/toon/purchase/no/coin/http-request.adoc[]
+include::{snippets}/toon/purchase/no/coin/http-response.adoc[]
+

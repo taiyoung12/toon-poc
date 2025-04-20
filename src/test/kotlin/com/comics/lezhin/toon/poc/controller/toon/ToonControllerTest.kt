@@ -1,7 +1,9 @@
 package com.comics.lezhin.toon.poc.controller.toon
 
+import com.comics.lezhin.toon.poc.app.exception.BaseException
 import com.comics.lezhin.toon.poc.application.toon.ToonApplication
 import com.comics.lezhin.toon.poc.application.toon.ToonViewApplication
+import com.comics.lezhin.toon.poc.common.code.CoinCode
 import com.comics.lezhin.toon.poc.common.code.ToonCode
 import com.comics.lezhin.toon.poc.common.code.ToonViewCode
 import com.comics.lezhin.toon.poc.controller.BaseApiTest
@@ -141,6 +143,64 @@ class ToonControllerTest : BaseApiTest() {
                         fieldWithPath("code").description(ToonCode.TOON_PURCHASE_SUCCESS.getCode()),
                         fieldWithPath("message").description(ToonCode.TOON_PURCHASE_SUCCESS.getMessage()),
                         fieldWithPath("data.balance").description("구매 후 남은 코인 잔액"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    fun `미성년자는 성인 작품을 구매할 수 없다`() {
+        val toonId = 1L
+        val userId = 1L
+
+        `when`(toonApplication.purchase(userId, toonId)).thenThrow(BaseException(ToonCode.FILTER_MINOR))
+
+        mockMvc
+            .perform(
+                post("/api/v1/toon/{toonId}/purchase", toonId)
+                    .header("Authorization", "Bearer dummy-token")
+                    .accept(MediaType.APPLICATION_JSON),
+            ).andExpect(status().isUnauthorized)
+            .andDo(print())
+            .andDo(
+                document(
+                    "toon/purchase/filter/adult",
+                    pathParameters(
+                        parameterWithName("toonId").description("웹툰 ID"),
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description(ToonCode.FILTER_MINOR.getCode()),
+                        fieldWithPath("message").description(ToonCode.FILTER_MINOR.getMessage()),
+                        fieldWithPath("data").description(ToonCode.FILTER_MINOR.getMessage()),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    fun `코인이 부족하면 작품을 구매할 수 없다`() {
+        val toonId = 1L
+        val userId = 1L
+
+        `when`(toonApplication.purchase(userId, toonId)).thenThrow(BaseException((CoinCode.INSUFFICIENT_BALANCE)))
+
+        mockMvc
+            .perform(
+                post("/api/v1/toon/{toonId}/purchase", toonId)
+                    .header("Authorization", "Bearer dummy-token")
+                    .accept(MediaType.APPLICATION_JSON),
+            ).andExpect(status().isBadRequest)
+            .andDo(print())
+            .andDo(
+                document(
+                    "toon/purchase/no/coin",
+                    pathParameters(
+                        parameterWithName("toonId").description("웹툰 ID"),
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description(CoinCode.INSUFFICIENT_BALANCE.getCode()),
+                        fieldWithPath("message").description(CoinCode.INSUFFICIENT_BALANCE.getMessage()),
+                        fieldWithPath("data").description(CoinCode.INSUFFICIENT_BALANCE.getMessage()),
                     ),
                 ),
             )
