@@ -1,0 +1,15 @@
+= Lezhin Toon API 문서
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== PING API
+
+=== Success PING API
+include::{snippets}/ping/curl-request.adoc[]
+include::{snippets}/ping/http-request.adoc[]
+include::{snippets}/ping/response-fields.adoc[]
+include::{snippets}/ping/http-response.adoc[]

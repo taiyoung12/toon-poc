@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("\${api.prefix}")
+@RequestMapping("/api/v1")
 class PingController {
     @GetMapping("/ping")
     fun pong(): Response<String> = Response.success("pong")

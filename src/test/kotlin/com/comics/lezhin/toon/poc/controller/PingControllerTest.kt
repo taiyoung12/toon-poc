@@ -1,41 +1,17 @@
 package com.comics.lezhin.toon.poc.controller
 
-import org.junit.jupiter.api.BeforeEach
+import com.comics.lezhin.toon.poc.controller.health.PingController
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
-import org.springframework.restdocs.RestDocumentationContextProvider
-import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
-import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.test.web.servlet.MockMvc
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.web.context.WebApplicationContext
 
-@ExtendWith(RestDocumentationExtension::class)
-@SpringBootTest
-class PingControllerTest {
-    @Autowired
-    private lateinit var context: WebApplicationContext
-
-    private lateinit var mockMvc: MockMvc
-
-    @BeforeEach
-    fun setup(restDocs: RestDocumentationContextProvider) {
-        mockMvc =
-            MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(documentationConfiguration(restDocs))
-                .alwaysDo(print())
-                .build()
-    }
-
+@WebMvcTest(PingController::class)
+class PingControllerTest : BaseApiTest() {
     @Test
     fun `ping 응답 문서 생성`() {
         mockMvc
