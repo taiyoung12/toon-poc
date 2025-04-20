@@ -32,10 +32,5 @@ class UserEntity(
     var age: Int = age
         protected set
 
-    fun filter(): Boolean {
-        if (this.age < 20) {
-            return false
-        }
-        return true
-    }
+    fun filter(): Boolean = this.age >= 20
 }
