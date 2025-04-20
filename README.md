@@ -44,6 +44,31 @@ docker-compose up -d
 http://localhost:8080/docs/index.html
 ```
 
+5. seed data 가 모두 들어가있습니다. 
+```
+mysql data query 는 src/resources/data.sql
+redis data query 는 RedisSeedDataConfig class 에서 확인하실 수 있습니다. 
+```
+
+6. API 실행 방법
+```
+1. localhost:8080/api/v1/auth/signin   
+// 계정 정보 (data.sql 에서 확인 가능)
+{
+    "email" : "lezhin2@test.com",
+    "password": "lezhin123!"
+}
+response 
+{
+    "code": "AT200",
+    "message": "성공",
+    "data": {
+        "accessToken": "accessToken"
+    }
+}
+accessToken 을 header 에 담아 이외의 API 요청 가능
+```
+
 ## ERD 
 
 ![ERD](./erd.png)
