@@ -82,3 +82,12 @@ include::{snippets}/toon/purchase/rank/success/curl-request.adoc[]
 include::{snippets}/toon/purchase/rank/success/http-request.adoc[]
 include::{snippets}/toon/purchase/rank/success/response-fields.adoc[]
 include::{snippets}/toon/purchase/rank/success/http-response.adoc[]
+
+== Toon Delete API
+
+=== Success 작품 삭제
+include::{snippets}/toon/delete/success/curl-request.adoc[]
+include::{snippets}/toon/delete/success/http-request.adoc[]
+include::{snippets}/toon/delete/success/path-parameters.adoc[]
+include::{snippets}/toon/delete/success/response-fields.adoc[]
+include::{snippets}/toon/delete/success/http-response.adoc[]

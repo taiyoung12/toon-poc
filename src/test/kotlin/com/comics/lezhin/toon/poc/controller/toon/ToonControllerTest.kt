@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.anyString
+import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.`when`
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
@@ -27,6 +28,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.context.bean.override.mockito.MockitoBean
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
@@ -301,6 +303,38 @@ class ToonControllerTest : BaseApiTest() {
                         fieldWithPath("data.rankings").description("인기 웹툰 랭킹 목록"),
                         fieldWithPath("data.rankings[].title").description("웹툰 제목"),
                         fieldWithPath("data.rankings[].rank").description("웹툰 순위"),
+                    ),
+                ),
+            )
+    }
+
+    @Test
+    fun `웹툰 정보를 삭제할 수 있다`() {
+        val toonId = 1L
+        val deletedAt = LocalDateTime.now()
+
+        doNothing().`when`(toonApplication).deleteToonAllInfo(
+            deletedAt = deletedAt,
+            toonId = toonId,
+        )
+
+        mockMvc
+            .perform(
+                delete("/api/v1/toon/{toonId}", toonId)
+                    .header("Authorization", "Bearer dummy-token")
+                    .accept(MediaType.APPLICATION_JSON),
+            ).andExpect(status().isOk)
+            .andDo(print())
+            .andDo(
+                document(
+                    "toon/delete/success",
+                    pathParameters(
+                        parameterWithName("toonId").description("삭제할 웹툰 ID"),
+                    ),
+                    responseFields(
+                        fieldWithPath("code").description(ToonCode.SUCCESS_DELETE_TOON_INFO.getCode()),
+                        fieldWithPath("message").description(ToonCode.SUCCESS_DELETE_TOON_INFO.getMessage()),
+                        fieldWithPath("data").description("응답 데이터 (null)"),
                     ),
                 ),
             )
