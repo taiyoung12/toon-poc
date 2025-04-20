@@ -1,5 +1,6 @@
 package com.comics.lezhin.toon.poc.controller.toon
 
+import com.comics.lezhin.toon.poc.application.toon.ToonApplication
 import com.comics.lezhin.toon.poc.application.toon.ToonViewApplication
 import com.comics.lezhin.toon.poc.common.code.ToonViewCode
 import com.comics.lezhin.toon.poc.controller.BaseApiTest
@@ -25,6 +26,9 @@ import java.time.LocalDateTime
 class ToonControllerTest : BaseApiTest() {
     @MockitoBean
     private lateinit var toonViewApplication: ToonViewApplication
+
+    @MockitoBean
+    private lateinit var toonApplication: ToonApplication
 
     @Test
     fun `작품 조회 이력을 조회할 수 있다`() {
