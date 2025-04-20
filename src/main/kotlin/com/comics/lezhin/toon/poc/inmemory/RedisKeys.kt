@@ -6,4 +6,6 @@ object RedisKeys {
     const val VIEWED_TOP_GENERAL = "viewed:top:general"
     const val VIEWED_TOP_ADULT = "viewed:top:adult"
     const val VIEWED_TOP_COMBINED = "viewed:top:combined"
+
+    const val PURCHASE_RANK_KEY = "purchase:ranking"
 }
