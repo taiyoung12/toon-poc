@@ -11,7 +11,7 @@ class ToonViewHistoryReader(
 ) {
     @Transactional(readOnly = true)
     fun findToonViewHistoryListBy(id: Long): List<ToonViewHistoryEntity>? {
-        val toonViewHistoryEntityList = toonViewHistoryRepository.findAllById(id = id)
+        val toonViewHistoryEntityList = toonViewHistoryRepository.findAllByToonId(id = id)
         return toonViewHistoryEntityList
     }
 }

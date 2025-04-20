@@ -4,5 +4,5 @@ import com.comics.lezhin.toon.poc.entity.ToonViewHistoryEntity
 import org.springframework.data.repository.Repository
 
 interface ToonViewHistoryRepository : Repository<ToonViewHistoryEntity, Long> {
-    fun findAllById(id: Long): List<ToonViewHistoryEntity>
+    fun findAllByToonId(id: Long): List<ToonViewHistoryEntity>
 }
